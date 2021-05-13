@@ -17,6 +17,6 @@ export function validate(event) {
     event.stopPropagation();
 };
 
-txtEl.addEventListener('input', (event) => {
-    validate(event);
-})
+// txtEl.addEventListener('input', (event) => {
+//     validate(event);
+// })

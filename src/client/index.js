@@ -1,6 +1,5 @@
 // js module
-import { validate } from './js/validate';
-import { sentimentAnalysis } from './js/sentiment-analysis';
+import { fetchData } from './js/service'
 
 // Sass
 import './styles/resets.scss';
@@ -11,12 +10,12 @@ import './styles/header.scss'
 const subEl = document.querySelector('.btn-primary');
 
 // Event handler
-subEl.addEventListener('click', (event) => {
-    validate(event);
-    sentimentAnalysis(event);
-});
+subEl.addEventListener('click', async (event) => {
+    event.preventDefault();
 
-export {
-    sentimentAnalysis,
-    validate
-};
+    const country = document.querySelector('[name="country"]').value;
+    const location = document.querySelector('[name="location"]').value;
+    const departure = document.querySelector('[name="departure"]').value;
+    const data = await fetchData('/fetchData', country, location, departure);
+    console.log(data);
+});

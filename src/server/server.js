@@ -28,12 +28,13 @@ app.listen(8081, function () {
     console.log('listening on port 8081!')
 })
 
-app.post('/fetchMeaningCloud', (req, res) => {
-    axios.get(`https://api.meaningcloud.com/sentiment-2.1?key=${process.env.API_KEY}&of=json&lang=en&txt=${req.body.txt}`)
-        .then((apiRes) => {
-            res.send(apiRes.data)
-        })
-        .catch((error) => {
-            console.log(error)
-        })
+app.get('/fetchData', async (req, res) => {
+    console.log(req.query)
+    try {
+        const data = await axios.get(`http://api.geonames.org/searchJSON?country=${req.query.country}&name_equals=${req.query.location}&maxRows=1&username=${process.env.GEO_NAME_USERNAME}`)
+        console.log(data)
+    } catch (error) {
+        const { status, statusText, data } = error.response;
+        console.log(`Error! HTTP Status: ${status} ${statusText}, errMsg : ${data.status.message}`);
+    }
 })
