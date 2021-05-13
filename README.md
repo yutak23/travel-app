@@ -14,7 +14,7 @@
 
 ### front end
 
-- native Javascript
+- Vanilla Javascript
 - HTML5
 - Sass(CSS) and bootstrap5
 
