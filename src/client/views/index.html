@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Sentiment Analysis</title>
+</head>
+
+<body class="d-flex flex-column h-100">
+  <header class="mt-5">
+    <div class="container">
+      <h1>Sentiment Analysis!</h1>
+      <p>Write down your mood today to understand your feelings.</p>
+    </div>
+  </header>
+
+  <main class="mt-5">
+    <div class="container p-5 bg-light">
+      <section>
+        <form class="needs-validation" novalidate>
+          <div class="mb-3">
+            <label class="form-label">Could you plz write your feeling now.</label>
+            <input type="text" class="form-control" id="txt" required />
+            <div class="invalid-feedback">
+              Please input any and you can input only English of alphabet.
+            </div>
+            <div class="valid-feedback">OK</div>
+          </div>
+          <div class="mb-3">
+            <button class="btn btn-primary" type="submit">Submit</button>
+          </div>
+        </form>
+      </section>
+
+      <section>
+        <div class="card">
+          <div class="card-body">
+            <strong>Your feeling is:</strong>
+            <div id="results" class="d-flex flex-column"></div>
+          </div>
+        </div>
+      </section>
+      <figure class="mt-5 text-center">
+        <div id="icon"></div>
+      </figure>
+    </div>
+  </main>
+
+  <footer class="footer mt-auto py-3 bg-light">
+    <div class="container">
+      <span class="text-muted">powered by <a href="https://getbootstrap.com/">bootstrap</a> and
+        <a href="https://www.meaningcloud.com/developer/sentiment-analysis/doc/2.1">meaningcloud.com</a></span>
+    </div>
+  </footer>
+
+  <script>
+    // Check that service workers are supported
+    // if ("serviceWorker" in navigator) {
+    //   // Use the window load event to keep the page load performant
+    //   window.addEventListener("load", () => {
+    //     navigator.serviceWorker.register("/service-worker.js");
+    //   });
+    // }
+  </script>
+</body>
+
+</html>
