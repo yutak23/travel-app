@@ -1,3 +1,4 @@
+const webpack = require('webpack')
 const HtmlWebPackPlugin = require("html-webpack-plugin")
 const {
     CleanWebpackPlugin
@@ -65,6 +66,10 @@ module.exports = {
             verbose: true,
             cleanStaleWebpackAssets: true,
             protectWebpackAssets: false
+        }),
+        new webpack.ProvidePlugin({
+            jQuery: "jquery",
+            $: "jquery"
         })
     ]
 }

@@ -17,12 +17,12 @@
   <main class="mt-5">
     <div class="container p-5 bg-light">
       <section>
-        <form class="row g-3 needs-validation" novalidate>
-          <div class="form-floating">
+        <form class="row g-3 needs-validation" autocomplete="off" novalidate>
+          <div class="col-md-6 form-floating">
             <input name="country" type="text" class="form-control" placeholder="Country">
             <label for="floatingInput">Country</label>
           </div>
-          <div class="form-floating">
+          <div class="col-md-6 form-floating">
             <input name="location" type="text" class="form-control" placeholder="Location">
             <label for="floatingInput">Location</label>
           </div>
@@ -39,7 +39,7 @@
             <label for="floatingInput">Departure</label>
           </div>
           <div class="form-floating">
-            <button class="btn btn-primary" type="submit">Submit</button>
+            <button id="btn" class="btn btn-primary" type="submit">Submit</button>
           </div>
         </form>
       </section>
