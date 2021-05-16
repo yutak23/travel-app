@@ -10,6 +10,12 @@
 
 ## function
 
+- 国・都市をサジェストで選択できるようにした
+
+## ToDo
+
+1. サジェストを Web API(https://countrystatecity.in/)からのデータ取得に変更する
+
 ## technology
 
 ### front end

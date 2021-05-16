@@ -29,6 +29,7 @@ app.listen(8081, function () {
 })
 
 app.get('/fetchData', async (req, res) => {
+    console.log(req.query)
     try {
         const geoNames = await axios.get(`http://api.geonames.org/searchJSON?country=${req.query.country}&name_equals=${req.query.location}&maxRows=1&username=${process.env.GEO_NAME_USERNAME}`)
         const currentWeatherBit = await axios.get(`https://api.weatherbit.io/v2.0/current?key=${process.env.WAETHERBIT_API_KEY}&lat=${geoNames.data.geonames[0].lat}&lon=${geoNames.data.geonames[0].lng}`)
