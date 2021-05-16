@@ -14,7 +14,7 @@
 
 ## ToDo
 
-1. サジェストを Web API(https://countrystatecity.in/)からのデータ取得に変更する
+1. サジェストを Web API (https://countrystatecity.in/) からのデータ取得に変更する
 
 ## technology
 
