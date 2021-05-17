@@ -7,15 +7,12 @@
 </head>
 
 <body class="d-flex flex-column h-100">
-  <header class="mt-5">
-    <div class="container">
-      <h1>Sentiment Analysis!</h1>
-      <p>Write down your mood today to understand your feelings.</p>
-    </div>
+  <header class="container mt-3">
+    <h1>Trip App!</h1>
   </header>
 
-  <main class="mt-5">
-    <div class="container p-5 bg-light">
+  <main class="mt-3 container">
+    <div class="p-5 bg-light">
       <section>
         <form class="row g-3 needs-validation" autocomplete="off" novalidate>
           <div class="col-md-6 form-floating">
@@ -43,19 +40,12 @@
           </div>
         </form>
       </section>
-
-      <section>
-        <div class="card">
-          <div class="card-body">
-            <strong>Your feeling is:</strong>
-            <div id="results" class="d-flex flex-column"></div>
-          </div>
-        </div>
-      </section>
-      <figure class="mt-5 text-center">
-        <div id="icon"></div>
-      </figure>
     </div>
+
+    <section class="text-center">
+      <h1>Your Trip Location Info</h1>
+      <figure id="location-img"></figure>
+    </section>
   </main>
 
   <footer class="footer mt-auto py-3 bg-light">

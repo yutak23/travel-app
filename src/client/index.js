@@ -1,5 +1,6 @@
 // js module
 import { fetchData, getCountryList, getCityList } from './js/service';
+import { renderImg } from './js/display';
 
 import 'bootstrap-suggest';
 
@@ -24,7 +25,9 @@ subEl.addEventListener('click', async (event) => {
     event.preventDefault();
 
     const data = await fetchData('/fetchData', pageData.countryCode, pageData.location, departure.value);
-    console.log(data)
+    console.log(data);
+
+    renderImg(data.pixabay);
 });
 
 document.addEventListener('DOMContentLoaded', async () => {
