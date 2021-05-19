@@ -1,8 +1,12 @@
 // js module
 import { fetchData, getCountryList, getCityList } from './js/service';
-import { renderImg } from './js/display';
+import { renderImg, renderCurrentWeather } from './js/display';
 
 import 'bootstrap-suggest';
+
+// import all img
+const importAll = (r) => r.keys().forEach(r);
+importAll(require.context('../', true, /\.png$/));
 
 // Sass
 import './styles/resets.scss';
@@ -19,15 +23,11 @@ const pageData = {};
 
 // Event handler
 subEl.addEventListener('click', async (event) => {
-    console.log('Event')
-    console.log(data);
-    event.stopPropagation();
-    event.preventDefault();
-
     const data = await fetchData('/fetchData', pageData.countryCode, pageData.location, departure.value);
     console.log(data);
 
     renderImg(data.pixabay);
+    renderCurrentWeather(data.currentWeatherBit, pageData);
 });
 
 document.addEventListener('DOMContentLoaded', async () => {

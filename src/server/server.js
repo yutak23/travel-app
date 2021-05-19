@@ -35,7 +35,10 @@ app.get('/fetchData', async (req, res) => {
         const currentWeatherBit = await axios.get(`https://api.weatherbit.io/v2.0/current?key=${process.env.WAETHERBIT_API_KEY}&lat=${geoNames.data.geonames[0].lat}&lon=${geoNames.data.geonames[0].lng}`)
         const forecastWeatherBit = await axios.get(`https://api.weatherbit.io/v2.0/forecast/daily?key=${process.env.WAETHERBIT_API_KEY}&lat=${geoNames.data.geonames[0].lat}&lon=${geoNames.data.geonames[0].lng}`)
         const pixabay = await axios.get(`https://pixabay.com/api/?key=${process.env.PIXABAY_API_KEY}&q=${req.query.location}&category=travel&&image_type=photo&orientation=horizontal`)
-        res.send({ pixabay: pickUpRandomImg(pixabay.data.hits) })
+        res.send({
+            currentWeatherBit: currentWeatherBit.data.data[0].weather,
+            pixabay: pickUpRandomImg(pixabay.data.hits)
+        })
     } catch (error) {
         console.log(error);
         const { status, statusText, data } = error.response;
