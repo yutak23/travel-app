@@ -1,3 +1,7 @@
+// for using async/await in babel
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
+
 // js module
 import { fetchData, getCountryList, getCityList } from './js/service';
 import { renderCurrentWeather, renderForecastWeather } from './js/display';
@@ -34,17 +38,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     countrySuggest();
 })
 
-const countrySuggest = () => {
+const countrySuggest = async () => {
     $('[name="country"]').suggest('#', {
-        data: getCountryList(),
+        data: await getCountryList(),
         map: function (country) {
             return {
-                value: `{"name" : "${country.name}", "code" : "${country.isoCode}"}`,
+                value: `{"name" : "${country.name}", "code" : "${country.iso2}"}`,
                 text: '<strong>' + country.name + '</strong>'
             }
         },
         onselect(e, item) {
             const jsonObj = JSON.parse(item.value);
+            console.log(jsonObj);
             pageData.countryName = jsonObj.name;
             pageData.countryCode = jsonObj.code;
             countryEl.value = pageData.countryName;
@@ -53,9 +58,9 @@ const countrySuggest = () => {
     })
 }
 
-const citySuggest = (code) => {
+const citySuggest = async (code) => {
     $('[name="location"]').suggest('#', {
-        data: getCityList(code),
+        data: await getCityList(code),
         map: function (city) {
             return {
                 value: city.name,

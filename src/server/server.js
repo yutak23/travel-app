@@ -28,6 +28,33 @@ app.listen(8081, function () {
     console.log('listening on port 8081!')
 })
 
+// 国・都市名を取得するためのinstance
+const instance = axios.create({
+    baseURL: 'https://api.countrystatecity.in/v1/',
+    timeout: 2000,
+    headers: { 'X-CSCAPI-KEY': process.env.COUNTRYSTATECITY_API_KRY }
+})
+
+app.get('/allCountries', async (req, res) => {
+    try {
+        const countries = await instance.get('countries')
+        res.send({ countries: countries.data })
+    } catch (error) {
+        console.log(error)
+        res.send({ error: error })
+    }
+})
+
+app.get('/allCitiesByCountry', async (req, res) => {
+    try {
+        const cities = await instance.get(`countries/${req.query.ciso}/cities`)
+        res.send({ cities: cities.data })
+    } catch (error) {
+        console.log(error)
+        res.send({ error: error })
+    }
+})
+
 app.get('/fetchData', async (req, res) => {
     console.log(req.query)
     try {
