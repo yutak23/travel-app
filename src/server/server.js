@@ -58,14 +58,22 @@ app.get('/allCitiesByCountry', async (req, res) => {
 app.get('/fetchData', async (req, res) => {
     console.log(req.query)
     try {
-        const geoNames = await axios.get(`http://api.geonames.org/searchJSON?country=${req.query.country}&name_equals=${req.query.location}&maxRows=1&username=${process.env.GEO_NAME_USERNAME}`)
+        let pixabay
+        let pixabayResOp = 'location'
+        const geoNames = await axios.get(`http://api.geonames.org/searchJSON?country=${req.query.countryCode}&name_equals=${req.query.location}&maxRows=1&username=${process.env.GEO_NAME_USERNAME}`)
         const currentWeatherBit = await axios.get(`https://api.weatherbit.io/v2.0/current?key=${process.env.WAETHERBIT_API_KEY}&lat=${geoNames.data.geonames[0].lat}&lon=${geoNames.data.geonames[0].lng}`)
         const forecastWeatherBit = await axios.get(`https://api.weatherbit.io/v2.0/forecast/daily?key=${process.env.WAETHERBIT_API_KEY}&lat=${geoNames.data.geonames[0].lat}&lon=${geoNames.data.geonames[0].lng}`)
-        const pixabay = await axios.get(`https://pixabay.com/api/?key=${process.env.PIXABAY_API_KEY}&q=${req.query.location}&category=travel&&image_type=photo&orientation=horizontal`)
+        pixabay = await axios.get(`https://pixabay.com/api/?key=${process.env.PIXABAY_API_KEY}&q=${req.query.location}&category=travel&&image_type=photo&orientation=horizontal`)
+
+        if (!pixabay.data.hits.length) {
+            pixabayResOp = 'country'
+            pixabay = await axios.get(`https://pixabay.com/api/?key=${process.env.PIXABAY_API_KEY}&q=${req.query.countryName}&category=travel&&image_type=photo&orientation=horizontal`)
+        }
         res.send({
             currentWeatherBit: currentWeatherBit.data.data,
             forecastWeatherBit: forecastWeatherBit.data.data,
-            pixabay: pickUpRandomImg(pixabay.data.hits)
+            pixabay: pickUpRandomImg(pixabay.data.hits),
+            pixabayResOp: pixabayResOp
         })
     } catch (error) {
         console.log(error);
@@ -79,8 +87,6 @@ app.get('/fetchData', async (req, res) => {
 
 const pickUpRandomImg = (data) => {
     const randomInt = getRandomInt(0, data.length - 1)
-    console.log(data.length)
-    console.log(randomInt)
     if (!data.length) return 'nothing'
     else return data[randomInt].webformatURL
 }

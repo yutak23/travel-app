@@ -4,11 +4,12 @@
 
 import axios from 'axios';
 
-export const fetchData = async (url = '', country, location) => {
-    const response = await fetch(`${url}?country=${country}&location=${location}`);
+export const fetchData = async (url = '', countryCode, countryName, location) => {
+    const response = await fetch(`${url}?countryCode=${countryCode}&countryName=${countryName}&location=${location}`);
 
     try {
         const fetchData = await response.json();
+        console.log(fetchData);
         return fetchData;
     } catch (error) {
         console.log("error", error);

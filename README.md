@@ -22,6 +22,8 @@ this project uses `dotenv`, so you should create `.env` file and file contains b
 - 国・都市をサジェストで選択できるようにした
 - Pixabay API からの Return を画面に描画する
 - 現在の天気・16 日間予報をアイコンと共にカードコンポーネントで表示できるようにした
+- 出発日に基づいて、表示が変わるようにした
+- 都市名で検索してヒットしない場合、国名で検索した Pixabay API を返すようにする
 
 ## ToDo
 

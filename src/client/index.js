@@ -21,13 +21,13 @@ import './styles/header.scss'
 const subEl = document.querySelector('.btn-primary');
 const countryEl = document.querySelector('[name="country"]');
 const locationEl = document.querySelector('[name="location"]');
-const departure = document.querySelector('[name="departure"]')
+const departure = document.querySelector('[name="departure"]');
 
 const pageData = {};
 
 // Event handler
 subEl.addEventListener('click', async () => {
-    const data = await fetchData('/fetchData', pageData.countryCode, pageData.location, departure.value);
+    const data = await fetchData('/fetchData', pageData.countryCode, pageData.countryName, pageData.location, departure.value);
 
     const compareDate = addDays(Date.now(), 6);
     if (new Date(departure.value).getTime() <= new Date(compareDate).getTime()) renderCurrentWeather(data, pageData);
