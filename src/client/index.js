@@ -26,12 +26,12 @@ const departure = document.querySelector('[name="departure"]')
 const pageData = {};
 
 // Event handler
-subEl.addEventListener('click', async (event) => {
+subEl.addEventListener('click', async () => {
     const data = await fetchData('/fetchData', pageData.countryCode, pageData.location, departure.value);
-    console.log(data);
 
-    renderCurrentWeather(data, pageData);
-    renderForecastWeather(data, pageData);
+    const compareDate = addDays(Date.now(), 6);
+    if (new Date(departure.value).getTime() <= new Date(compareDate).getTime()) renderCurrentWeather(data, pageData);
+    else renderForecastWeather(data, pageData);
 });
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -72,4 +72,10 @@ const citySuggest = async (code) => {
             locationEl.value = pageData.location;
         }
     })
+}
+
+const addDays = (date, days) => {
+    const result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
 }

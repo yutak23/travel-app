@@ -28,7 +28,7 @@ app.listen(8081, function () {
     console.log('listening on port 8081!')
 })
 
-// 国・都市名を取得するためのinstance
+// instance for get countries and cities
 const instance = axios.create({
     baseURL: 'https://api.countrystatecity.in/v1/',
     timeout: 2000,
@@ -72,8 +72,8 @@ app.get('/fetchData', async (req, res) => {
         const { status, statusText, data } = error.response;
         console.log(`Error! HTTP Status: ${status} ${statusText}`);
         console.log('Return error message is below :');
-        console.log(data);
-        res.send(data)
+        // console.log(data);
+        res.send(error)
     }
 })
 

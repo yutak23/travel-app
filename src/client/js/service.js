@@ -4,8 +4,8 @@
 
 import axios from 'axios';
 
-export const fetchData = async (url = '', country, location, departure) => {
-    const response = await fetch(`${url}?country=${country}&location=${location}&departure=${departure}`);
+export const fetchData = async (url = '', country, location) => {
+    const response = await fetch(`${url}?country=${country}&location=${location}`);
 
     try {
         const fetchData = await response.json();
