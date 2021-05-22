@@ -23,7 +23,9 @@ const renderWeatherAndLocation = (type, datas, pageData, data) => {
     container.querySelector(`.location-img`).append(imgEl);
 
     // in the case of the image could not be obtained by the city name
-    container.querySelector(`.alert-warning`).classList.remove('display-none');
+    if (data.pixabayResOp !== 'location') {
+        container.querySelector(`.alert-warning`).classList.remove('display-none');
+    }
 
     // location info
     container.querySelector(`.location-title`).innerHTML = `Your trip location is ${pageData.location}, ${pageData.countryName}`;

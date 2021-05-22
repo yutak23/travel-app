@@ -15,31 +15,31 @@ module.exports = {
         }, {
             test: /\.scss$/,
             use: [{
-                    loader: MiniCssExtractPlugin.loader,
+                loader: MiniCssExtractPlugin.loader,
+            },
+            {
+                loader: "css-loader",
+                options: {
+                    url: false,
+                    sourceMap: true,
+                    importLoaders: 2,
                 },
-                {
-                    loader: "css-loader",
-                    options: {
-                        url: false,
-                        sourceMap: true,
-                        importLoaders: 2,
+            },
+            {
+                loader: "postcss-loader",
+                options: {
+                    sourceMap: true,
+                    postcssOptions: {
+                        plugins: ["autoprefixer"],
                     },
                 },
-                {
-                    loader: "postcss-loader",
-                    options: {
-                        sourceMap: true,
-                        postcssOptions: {
-                            plugins: ["autoprefixer"],
-                        },
-                    },
+            },
+            {
+                loader: "sass-loader",
+                options: {
+                    sourceMap: true,
                 },
-                {
-                    loader: "sass-loader",
-                    options: {
-                        sourceMap: true,
-                    },
-                },
+            },
             ]
         }, {
             test: /\.(png|jpe?g|gif)$/i,
@@ -57,6 +57,10 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: '[name].css'
         }),
-        new WorkboxPlugin.GenerateSW()
+        new WorkboxPlugin.GenerateSW(),
+        new webpack.ProvidePlugin({
+            jQuery: "jquery",
+            $: "jquery"
+        })
     ]
 }

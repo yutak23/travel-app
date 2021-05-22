@@ -49,7 +49,6 @@ const countrySuggest = async () => {
         },
         onselect(e, item) {
             const jsonObj = JSON.parse(item.value);
-            console.log(jsonObj);
             pageData.countryName = jsonObj.name;
             pageData.countryCode = jsonObj.code;
             countryEl.value = pageData.countryName;
