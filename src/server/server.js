@@ -36,7 +36,8 @@ app.get('/fetchData', async (req, res) => {
         const forecastWeatherBit = await axios.get(`https://api.weatherbit.io/v2.0/forecast/daily?key=${process.env.WAETHERBIT_API_KEY}&lat=${geoNames.data.geonames[0].lat}&lon=${geoNames.data.geonames[0].lng}`)
         const pixabay = await axios.get(`https://pixabay.com/api/?key=${process.env.PIXABAY_API_KEY}&q=${req.query.location}&category=travel&&image_type=photo&orientation=horizontal`)
         res.send({
-            currentWeatherBit: currentWeatherBit.data.data[0].weather,
+            currentWeatherBit: currentWeatherBit.data.data,
+            forecastWeatherBit: forecastWeatherBit.data.data,
             pixabay: pickUpRandomImg(pixabay.data.hits)
         })
     } catch (error) {
@@ -50,7 +51,9 @@ app.get('/fetchData', async (req, res) => {
 })
 
 const pickUpRandomImg = (data) => {
-    const randomInt = getRandomInt(0, 19)
+    const randomInt = getRandomInt(0, data.length - 1)
+    console.log(data.length)
+    console.log(randomInt)
     if (!data.length) return 'nothing'
     else return data[randomInt].webformatURL
 }

@@ -1,5 +1,13 @@
-export const renderImg = (url) => {
-    const figureEl = document.querySelector('#location-img');
+export const renderCurrentWeather = (data, pageData) => {
+    renderWeatherAndLocation('current-weather', data.currentWeatherBit, pageData, data.pixabay);
+}
+
+export const renderForecastWeather = (data, pageData) => {
+    renderWeatherAndLocation('forecast-weather', data.forecastWeatherBit, pageData, data.pixabay);
+}
+
+const renderImg = (type, url) => {
+    const figureEl = document.querySelector(`#${type} .location-img`);
 
     const imgEl = document.createElement('img');
     imgEl.setAttribute('src', url);
@@ -7,13 +15,36 @@ export const renderImg = (url) => {
     figureEl.append(imgEl);
 }
 
-export const renderCurrentWeather = (weatherData, pageData) => {
-    const locationTitleEl = document.querySelector('#location-title');
+const renderWeatherAndLocation = (type, datas, pageData, url) => {
+    renderImg(type, url);
+
+    const locationTitleEl = document.querySelector(`#${type} .location-title`);
     locationTitleEl.innerHTML = `Your trip location is ${pageData.location}, ${pageData.countryName}`;
 
-    const forcastImgEl = document.querySelector('#curr-img');
-    forcastImgEl.setAttribute('src', `${weatherData.icon}.png`);
+    const weatherDataEl = document.querySelector(`#${type} .weather-data`);
+    const docFrag = document.createDocumentFragment();
 
-    const forcastDescriptionEl = document.querySelector('#curr-forc');
-    forcastDescriptionEl.innerHTML = `The weather forecast for <span class="fst-italic">${pageData.location}</span> at your destination is <span class="fw-bold">${weatherData.description}</span>.`;
+    datas.forEach(data => {
+        const dumyEl = document.createElement('div');
+        const originRow = document.querySelector('#dumy-table #repeat-content').cloneNode(true);
+        dumyEl.append(originRow);
+
+        const rowEl = document.createElement('tr');
+        dumyEl.querySelectorAll('td').forEach((td) => {
+            rowEl.append(td);
+        })
+
+        rowEl.querySelector(".weather-icon").setAttribute('src', `${data.weather.icon}.png`);
+        rowEl.querySelector(".valid-date").innerHTML = `${data.valid_date}`;
+        rowEl.querySelector(".description").innerHTML = `${data.weather.description}`;
+        rowEl.querySelector(".max-temp").innerHTML = `${data.max_temp}℃`;
+        rowEl.querySelector(".min-temp").innerHTML = `${data.min_temp}℃`;
+        rowEl.querySelector(".rainy-percent").innerHTML = `${data.pop}%`;
+
+        docFrag.append(rowEl);
+    })
+
+    weatherDataEl.append(docFrag);
+
+    document.querySelector(`#${type}`).classList.remove('display-none');
 }

@@ -1,6 +1,6 @@
 // js module
 import { fetchData, getCountryList, getCityList } from './js/service';
-import { renderImg, renderCurrentWeather } from './js/display';
+import { renderCurrentWeather, renderForecastWeather } from './js/display';
 
 import 'bootstrap-suggest';
 
@@ -26,8 +26,8 @@ subEl.addEventListener('click', async (event) => {
     const data = await fetchData('/fetchData', pageData.countryCode, pageData.location, departure.value);
     console.log(data);
 
-    renderImg(data.pixabay);
-    renderCurrentWeather(data.currentWeatherBit, pageData);
+    renderCurrentWeather(data, pageData);
+    renderForecastWeather(data, pageData);
 });
 
 document.addEventListener('DOMContentLoaded', async () => {
