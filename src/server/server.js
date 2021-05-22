@@ -77,11 +77,11 @@ app.get('/fetchData', async (req, res) => {
         })
     } catch (error) {
         console.log(error);
-        const { status, statusText, data } = error.response;
-        console.log(`Error! HTTP Status: ${status} ${statusText}`);
-        console.log('Return error message is below :');
+        // const { status, statusText, data } = error.response;
+        // console.log(`Error! HTTP Status: ${status} ${statusText}`);
+        // console.log('Return error message is below :');
         // console.log(data);
-        res.send(error)
+        res.send({ errMsg: error })
     }
 })
 

@@ -5,6 +5,7 @@ import 'regenerator-runtime/runtime';
 // js module
 import { fetchData, getCountryList, getCityList } from './js/service';
 import { renderCurrentWeather, renderForecastWeather } from './js/display';
+import { doneSubmit, doneResponse } from './js/form';
 
 import 'bootstrap-suggest';
 
@@ -27,8 +28,10 @@ const pageData = {};
 
 // Event handler
 subEl.addEventListener('click', async () => {
+    doneSubmit();
     const data = await fetchData('/fetchData', pageData.countryCode, pageData.countryName, pageData.location, departure.value);
 
+    doneResponse();
     const compareDate = addDays(Date.now(), 6);
     if (new Date(departure.value).getTime() <= new Date(compareDate).getTime()) renderCurrentWeather(data, pageData);
     else renderForecastWeather(data, pageData);

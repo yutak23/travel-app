@@ -25,6 +25,7 @@ this project uses `dotenv`, so you should create `.env` file and file contains b
 - 出発日に基づいて、表示が変わるようにした
 - 都市名で検索してヒットしない場合、国名で検索した Pixabay API を返すようにした
   - 国名で検索した結果を表示している場合は、その旨をメッセージでアラートするようにした
+- 読み込み中は「Loading」を表示するようにした
 
 ## ToDo
 
