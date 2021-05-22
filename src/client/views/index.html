@@ -46,80 +46,49 @@
       <h1>Your Trip Location Info</h1>
     </section>
 
-    <section>
-      <div id="current-weather" class="card display-none">
-        <div class="card-header">
-          The departure date you input is within a week, we tell you "Current Weather Forecast"
-        </div>
-        <div class="card-body">
-          <h4 class="card-title location-title"></h4>
-          <figure class="location-img"></figure>
-          <h4 class="card-title">Current Weather Forecast(today forecast)</h4>
-          <table class="table text-center">
-            <thead>
-              <tr>
-                <th scope="col">Date</th>
-                <th scope="col">Weather</th>
-                <th scope="col">Description</th>
-                <th scope="col">Max temp</th>
-                <th scope="col">Min temp</th>
-                <th scope="col">Rainy percent</th>
-              </tr>
-            </thead>
-            <tbody class="weather-data"></tbody>
-          </table>
-        </div>
-      </div>
-      </div>
-    </section>
-
-    <section>
-      <div id="forecast-weather" class="card display-none">
-        <div class="card-header">
-          The departure date you input is 1 week later, we tell you "Forecast Weather"
-        </div>
-        <div class="card-body">
-          <h4 class="card-title location-title"></h4>
-          <figure class="location-img"></figure>
-          <h4 class="card-title">Forecast Weather(7-day forecast)</h4>
-          <table class="table text-center">
-            <thead>
-              <tr>
-                <th scope="col">Date</th>
-                <th scope="col">Weather</th>
-                <th scope="col">Description</th>
-                <th scope="col">Max temp</th>
-                <th scope="col">Min temp</th>
-                <th scope="col">Rainy percent</th>
-              </tr>
-            </thead>
-            <tbody class="weather-data"></tbody>
-          </table>
-        </div>
-      </div>
-      </div>
-    </section>
+    <section id="trip-list"></section>
 
     <!-- 以下はフォーマット -->
     <section class="display-none">
-      <table id="dumy-table" class="table">
-        <thead>
-          <tr>
-            <th scope="col">date</th>
-            <th scope="col">Weather</th>
-            <th scope="col">description</th>
-            <th scope="col">max temp</th>
-            <th scope="col">min temp</th>
-          </tr>
-        </thead>
-        <tbody class="weather-data">
+      <div id="formate" class="card">
+        <div class="card-header"></div>
+        <div class="card-body">
+          <div class="alert alert-warning display-none" role="alert">
+            Since the image could not be obtained by the city name, the image of the country is displayed.
+          </div>
+          <h4 class="card-title location-title"></h4>
+          <figure class="location-img"></figure>
+          <h4 class="card-title">Current Weather Forecast(today forecast)</h4>
+          <p class="case-of-current display-none">
+            ※in the case of "Current Weather Forecast", max/min temp and Rainy percent are displayed as "ー".
+          </p>
+          <table class="table text-center">
+            <thead>
+              <tr>
+                <th scope="col">date</th>
+                <th scope="col">Weather</th>
+                <th scope="col">description</th>
+                <th scope="col">max temp</th>
+                <th scope="col">min temp</th>
+                <th scope="col">Rainy percent</th>
+              </tr>
+            </thead>
+            <tbody class="weather-data"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="display-none">
+      <table>
+        <tbody>
           <tr id="repeat-content">
             <td class="valid-date"></td>
             <td><img class="card-img-top w-25 weather-icon" alt="forecast weather"></td>
             <td class="description"></td>
             <td class="max-temp"></td>
             <td class="min-temp"></td>
-            <td class="rainy-percent"></td>]
+            <td class="rainy-percent"></td>
           </tr>
         </tbody>
       </table>

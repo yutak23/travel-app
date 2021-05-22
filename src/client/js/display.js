@@ -1,32 +1,44 @@
 export const renderCurrentWeather = (data, pageData) => {
-    renderWeatherAndLocation('current-weather', data.currentWeatherBit, pageData, data.pixabay);
+    renderWeatherAndLocation('current-weather', data.currentWeatherBit, pageData, data);
 }
 
 export const renderForecastWeather = (data, pageData) => {
-    renderWeatherAndLocation('forecast-weather', data.forecastWeatherBit, pageData, data.pixabay);
+    renderWeatherAndLocation('forecast-weather', data.forecastWeatherBit, pageData, data);
 }
 
-const renderImg = (type, url) => {
-    const figureEl = document.querySelector(`#${type} .location-img`);
+const renderWeatherAndLocation = (type, datas, pageData, data) => {
+    const tripListEl = document.querySelector('#trip-list');
 
+    const container = document.createElement('div');
+    const formate = document.querySelector('#formate').cloneNode(true);
+    container.append(formate);
+
+    // delete id to prevent bugs even if you add more than one
+    container.querySelector('#formate').removeAttribute('id');
+
+    // location img
     const imgEl = document.createElement('img');
-    imgEl.setAttribute('src', url);
+    imgEl.setAttribute('src', data.pixabay);
     imgEl.classList.add('w-100')
-    figureEl.append(imgEl);
-}
+    container.querySelector(`.location-img`).append(imgEl);
 
-const renderWeatherAndLocation = (type, datas, pageData, url) => {
-    renderImg(type, url);
+    // in the case of the image could not be obtained by the city name
+    container.querySelector(`.alert-warning`).classList.remove('display-none');
 
-    const locationTitleEl = document.querySelector(`#${type} .location-title`);
-    locationTitleEl.innerHTML = `Your trip location is ${pageData.location}, ${pageData.countryName}`;
+    // location info
+    container.querySelector(`.location-title`).innerHTML = `Your trip location is ${pageData.location}, ${pageData.countryName}`;
 
-    const weatherDataEl = document.querySelector(`#${type} .weather-data`);
+    // forecast or current
+    if (type === 'current-weather') {
+        container.querySelector('.card-header').innerHTML = 'The departure date you input is within a week, we tell you "Current Weather Forecast"';
+    } else {
+        container.querySelector('.card-header').innerHTML = 'The departure date you input is 1 week later, we tell you "Forecast Weather"';
+    }
+
     const docFrag = document.createDocumentFragment();
-
     datas.forEach(data => {
         const dumyEl = document.createElement('div');
-        const originRow = document.querySelector('#dumy-table #repeat-content').cloneNode(true);
+        const originRow = document.querySelector('#repeat-content').cloneNode(true);
         dumyEl.append(originRow);
 
         const rowEl = document.createElement('tr');
@@ -34,17 +46,27 @@ const renderWeatherAndLocation = (type, datas, pageData, url) => {
             rowEl.append(td);
         })
 
+        // weather data
         rowEl.querySelector(".weather-icon").setAttribute('src', `${data.weather.icon}.png`);
-        rowEl.querySelector(".valid-date").innerHTML = `${data.valid_date}`;
         rowEl.querySelector(".description").innerHTML = `${data.weather.description}`;
-        rowEl.querySelector(".max-temp").innerHTML = `${data.max_temp}℃`;
-        rowEl.querySelector(".min-temp").innerHTML = `${data.min_temp}℃`;
-        rowEl.querySelector(".rainy-percent").innerHTML = `${data.pop}%`;
+
+        if (type === 'current-weather') {
+            // in the case of "Current Weather Forecast"
+            container.querySelector(`.case-of-current`).classList.remove('display-none');
+            rowEl.querySelector(".valid-date").innerHTML = `${data.datetime.split(':')[0]}`;
+            rowEl.querySelector(".max-temp").innerHTML = `ー`;
+            rowEl.querySelector(".min-temp").innerHTML = `ー`;
+            rowEl.querySelector(".rainy-percent").innerHTML = `ー`;
+        } else {
+            rowEl.querySelector(".valid-date").innerHTML = `${data.valid_date}`;
+            rowEl.querySelector(".max-temp").innerHTML = `${data.max_temp}℃`;
+            rowEl.querySelector(".min-temp").innerHTML = `${data.min_temp}℃`;
+            rowEl.querySelector(".rainy-percent").innerHTML = `${data.pop}%`;
+        }
 
         docFrag.append(rowEl);
     })
 
-    weatherDataEl.append(docFrag);
-
-    document.querySelector(`#${type}`).classList.remove('display-none');
+    container.querySelector('.weather-data').append(docFrag);
+    tripListEl.append(container);
 }
