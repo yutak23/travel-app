@@ -1,7 +1,17 @@
+/**
+ * Draw the current weather forecast on the screen
+ * @param {object} data Weather forecast / local image data
+ * @param {object} pageData Data of input item on the screen
+ */
 export const renderCurrentWeather = (data, pageData) => {
     renderWeatherAndLocation('current-weather', pageData, data);
 }
 
+/**
+ * Draw the weather forecast on the screen
+ * @param {object} data Weather forecast / local image data
+ * @param {object} pageData Data of input item on the screen 
+ */
 export const renderForecastWeather = (data, pageData) => {
     renderWeatherAndLocation('forecast-weather', pageData, data);
 }
@@ -9,6 +19,7 @@ export const renderForecastWeather = (data, pageData) => {
 const renderWeatherAndLocation = (type, pageData, data) => {
     const tripListEl = document.querySelector('#trip-list');
 
+    // copy from format
     const container = document.createElement('div');
     container.classList.add('col-6');
     const formate = document.querySelector('#formate').cloneNode(true);

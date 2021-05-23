@@ -32,7 +32,7 @@ app.listen(8081, function () {
 const instance = axios.create({
     baseURL: 'https://api.countrystatecity.in/v1/',
     timeout: 2000,
-    headers: { 'X-CSCAPI-KEY': process.env.COUNTRYSTATECITY_API_KRY }
+    headers: { 'X-CSCAPI-KEY': 'R3NNWlJOV1EwaXdRTlZQZGtMUGdZYnkyTjBrTHdydFJMZnZFY0NWOA==' }
 })
 
 app.get('/allCountries', async (req, res) => {
@@ -40,8 +40,7 @@ app.get('/allCountries', async (req, res) => {
         const countries = await instance.get('countries')
         res.send({ countries: countries.data })
     } catch (error) {
-        console.log(error)
-        res.send({ error: error })
+        errorHandler(res, error)
     }
 })
 
@@ -50,8 +49,7 @@ app.get('/allCitiesByCountry', async (req, res) => {
         const cities = await instance.get(`countries/${req.query.ciso}/cities`)
         res.send({ cities: cities.data })
     } catch (error) {
-        console.log(error)
-        res.send({ error: error })
+        errorHandler(res, error)
     }
 })
 
@@ -60,6 +58,7 @@ app.get('/fetchData', async (req, res) => {
     try {
         let pixabay
         let pixabayResOp = 'location'
+
         const geoNames = await axios.get(`http://api.geonames.org/searchJSON?country=${req.query.countryCode}&name_equals=${req.query.location}&maxRows=1&username=${process.env.GEO_NAME_USERNAME}`)
         const currentWeatherBit = await axios.get(`https://api.weatherbit.io/v2.0/current?key=${process.env.WAETHERBIT_API_KEY}&lat=${geoNames.data.geonames[0].lat}&lon=${geoNames.data.geonames[0].lng}`)
         const forecastWeatherBit = await axios.get(`https://api.weatherbit.io/v2.0/forecast/daily?key=${process.env.WAETHERBIT_API_KEY}&lat=${geoNames.data.geonames[0].lat}&lon=${geoNames.data.geonames[0].lng}`)
@@ -67,8 +66,9 @@ app.get('/fetchData', async (req, res) => {
 
         if (!pixabay.data.hits.length) {
             pixabayResOp = 'country'
-            pixabay = await axios.get(`https://pixabay.com/api/?key=${process.env.PIXABAY_API_KEY}&q=${req.query.countryName}&category=travel&&image_type=photo&orientation=horizontal`)
+            pixabay = await axios.get(`https://pixabay.com/api/?key=21603647-82f55cd756897e1429c213cbf&q=${req.query.countryName}&category=travel&&image_type=photo&orientation=horizontal`)
         }
+
         res.send({
             currentWeatherBit: currentWeatherBit.data.data,
             forecastWeatherBit: forecastWeatherBit.data.data,
@@ -76,12 +76,7 @@ app.get('/fetchData', async (req, res) => {
             pixabayResOp: pixabayResOp
         })
     } catch (error) {
-        console.log(error);
-        // const { status, statusText, data } = error.response;
-        // console.log(`Error! HTTP Status: ${status} ${statusText}`);
-        // console.log('Return error message is below :');
-        // console.log(data);
-        res.send({ errMsg: error })
+        errorHandler(res, error)
     }
 })
 
@@ -95,4 +90,14 @@ const getRandomInt = (min, max) => {
     min = Math.ceil(min)
     max = Math.floor(max)
     return Math.floor(Math.random() * (max - min) + min)
+}
+
+const errorHandler = (res, error) => {
+    if (error.response) {
+        res.send({ error: error.response })
+    } else if (error.request) {
+        res.send({ error: error.request })
+    } else {
+        res.send({ error: error.message })
+    }
 }

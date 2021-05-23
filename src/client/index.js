@@ -5,7 +5,7 @@ import 'regenerator-runtime/runtime';
 // js module
 import { fetchData, getCountryList, getCityList } from './js/service';
 import { renderCurrentWeather, renderForecastWeather } from './js/display';
-import { doneSubmit, doneResponse } from './js/form';
+import { viewBadSearch, drewSubmittingBtn, drewSubmitBtn } from './js/form';
 
 import 'bootstrap-suggest';
 
@@ -29,15 +29,20 @@ const pageData = {};
 
 // Event handler
 subEl.addEventListener('click', async () => {
-    doneSubmit();
+    drewSubmittingBtn();
     pageData.departure = departure.value;
     pageData.endDate = endDate.value;
     const data = await fetchData('/fetchData', pageData.countryCode, pageData.countryName, pageData.location);
 
-    doneResponse();
-    const compareDate = addDays(Date.now(), 6);
-    if (new Date(departure.value).getTime() <= new Date(compareDate).getTime()) renderCurrentWeather(data, pageData);
-    else renderForecastWeather(data, pageData);
+    drewSubmitBtn();
+    console.log(data);
+    if (data.error) {
+        viewBadSearch();
+    } else {
+        const compareDate = addDays(Date.now(), 6);
+        if (new Date(departure.value).getTime() <= new Date(compareDate).getTime()) renderCurrentWeather(data, pageData);
+        else renderForecastWeather(data, pageData);
+    }
 });
 
 document.addEventListener('DOMContentLoaded', async () => {

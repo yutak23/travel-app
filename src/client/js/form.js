@@ -1,9 +1,31 @@
-export const doneSubmit = () => {
+import Toastify from 'toastify-js'
+
+/**
+ * Display an error toaster when the search content is incorrect
+ */
+export const viewBadSearch = () => {
+    Toastify({
+        text: "Please input 'Country' and 'Location' before click 'Submit' button.",
+        duration: 3000,
+        newWindow: true,
+        gravity: "top",
+        position: "left",
+        backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+    }).showToast();
+}
+
+/**
+ * Make the Submitting button draw
+ */
+export const drewSubmittingBtn = () => {
     hiddenSubmitBtn();
     displayLoadingBtn();
 }
 
-export const doneResponse = () => {
+/**
+ * Make the Submit button draw
+ */
+export const drewSubmitBtn = () => {
     displaySubmitBtn();
     hiddenLoadingBtn();
 }
