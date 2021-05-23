@@ -1,12 +1,12 @@
 export const renderCurrentWeather = (data, pageData) => {
-    renderWeatherAndLocation('current-weather', data.currentWeatherBit, pageData, data);
+    renderWeatherAndLocation('current-weather', pageData, data);
 }
 
 export const renderForecastWeather = (data, pageData) => {
-    renderWeatherAndLocation('forecast-weather', data.forecastWeatherBit, pageData, data);
+    renderWeatherAndLocation('forecast-weather', pageData, data);
 }
 
-const renderWeatherAndLocation = (type, datas, pageData, data) => {
+const renderWeatherAndLocation = (type, pageData, data) => {
     const tripListEl = document.querySelector('#trip-list');
 
     const container = document.createElement('div');
@@ -16,6 +16,9 @@ const renderWeatherAndLocation = (type, datas, pageData, data) => {
 
     // delete id to prevent bugs even if you add more than one
     container.querySelector('#formate').removeAttribute('id');
+
+    // card header
+    container.querySelector('.card-header').innerHTML = `destination : ${pageData.location}, ${pageData.countryName}　dep : ${pageData.departure} ー end : ${pageData.endDate}`;
 
     // location img
     const imgEl = document.createElement('img');
@@ -28,14 +31,18 @@ const renderWeatherAndLocation = (type, datas, pageData, data) => {
         container.querySelector(`.alert-warning`).classList.remove('display-none');
     }
 
-    // location info
+    // location title
     container.querySelector(`.location-title`).innerHTML = `Your trip location is ${pageData.location}, ${pageData.countryName}`;
 
+    // trip length
+    container.querySelector('.trip-length').innerHTML = `${(new Date(pageData.endDate).getTime() - new Date(pageData.departure).getTime()) / (1000 * 60 * 60 * 24)} days`;
+
     // forecast or current
+    let datas;
     if (type === 'current-weather') {
-        container.querySelector('.card-header').innerHTML = 'The departure date you input is within a week, we tell you "Current Weather Forecast"';
+        datas = data.currentWeatherBit;
     } else {
-        container.querySelector('.card-header').innerHTML = 'The departure date you input is 1 week later, we tell you "Forecast Weather"';
+        datas = data.forecastWeatherBit;
     }
 
     const docFrag = document.createDocumentFragment();

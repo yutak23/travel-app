@@ -23,13 +23,16 @@ const subEl = document.querySelector('.btn-primary');
 const countryEl = document.querySelector('[name="country"]');
 const locationEl = document.querySelector('[name="location"]');
 const departure = document.querySelector('[name="departure"]');
+const endDate = document.querySelector('[name="end-date"]');
 
 const pageData = {};
 
 // Event handler
 subEl.addEventListener('click', async () => {
     doneSubmit();
-    const data = await fetchData('/fetchData', pageData.countryCode, pageData.countryName, pageData.location, departure.value);
+    pageData.departure = departure.value;
+    pageData.endDate = endDate.value;
+    const data = await fetchData('/fetchData', pageData.countryCode, pageData.countryName, pageData.location);
 
     doneResponse();
     const compareDate = addDays(Date.now(), 6);
