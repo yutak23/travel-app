@@ -66,7 +66,7 @@ app.get('/fetchData', async (req, res) => {
 
         if (!pixabay.data.hits.length) {
             pixabayResOp = 'country'
-            pixabay = await axios.get(`https://pixabay.com/api/?key=21603647-82f55cd756897e1429c213cbf&q=${req.query.countryName}&category=travel&&image_type=photo&orientation=horizontal`)
+            pixabay = await axios.get(`https://pixabay.com/api/?key=${process.env.PIXABAY_API_KEY}&q=${req.query.countryName}&category=travel&&image_type=photo&orientation=horizontal`)
         }
 
         res.send({
