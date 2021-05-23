@@ -10,6 +10,7 @@ const renderWeatherAndLocation = (type, datas, pageData, data) => {
     const tripListEl = document.querySelector('#trip-list');
 
     const container = document.createElement('div');
+    container.classList.add('col-6');
     const formate = document.querySelector('#formate').cloneNode(true);
     container.append(formate);
 
