@@ -10,7 +10,8 @@
 
 ### how to install
 
-this project uses `dotenv`, so you should create `.env` file and file contains below key.
+This project uses `dotenv`, so you should create `.env` file and file contains below key.<br>
+This file is not provided via the project files so create it manually in the project root.
 
 - GEO_NAME_USERNAME : https://www.geonames.org/
 - WAETHERBIT_API_KEY : https://www.weatherbit.io/
@@ -19,15 +20,15 @@ this project uses `dotenv`, so you should create `.env` file and file contains b
 
 ## function
 
-- 国・都市をサジェストで選択できるようにした
-- Pixabay API からの Return を画面に描画する
-- 現在の天気・16 日間予報をアイコンと共にカードコンポーネントで表示できるようにした
-- 出発日に基づいて、表示が変わるようにした
-- 都市名で検索してヒットしない場合、国名で検索した Pixabay API を返すようにした
-  - 国名で検索した結果を表示している場合は、その旨をメッセージでアラートするようにした
-- 読み込み中は「Loading」を表示するようにした
+- Select a country / city by suggestion<br>国・都市をサジェストで選択
+- Draw Return from AIX API on screen<br>Pixabay API からの Return を画面に描画
+- Display current weather / 16-day forecast with icon on card component<br>現在の天気・16 日間予報をアイコンと共にカードコンポーネントで表示
+- The display changes based on the departure date<br>出発日に基づいて表示が変わる
+- If you search by city name and do not hit, return the Agilent API searched by country name<br>都市名で検索してヒットしない場合、国名で検索した Pixabay API を返す
+  - If you are viewing the results of a search by country name, alert you with a message to that effect<br>国名で検索した結果を表示している場合は、その旨をメッセージでアラートする
+- Display "Submiting" while loading<br>読み込み中は「Submiting」と表示する
 
-## ToDo
+## FIXME
 
 1. ~~サジェストを Web API (https://countrystatecity.in/) からのデータ取得に変更する~~
 1. pixabay api でデータがヒットしないかった時に描画する img を用意しそれを描画するようにする
