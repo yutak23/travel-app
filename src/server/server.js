@@ -32,7 +32,7 @@ app.listen(8081, function () {
 const instance = axios.create({
     baseURL: 'https://api.countrystatecity.in/v1/',
     timeout: 2000,
-    headers: { 'X-CSCAPI-KEY': 'R3NNWlJOV1EwaXdRTlZQZGtMUGdZYnkyTjBrTHdydFJMZnZFY0NWOA==' }
+    headers: { 'X-CSCAPI-KEY': `${process.env.COUNTRYSTATECITY_API_KRY}` }
 })
 
 app.get('/allCountries', async (req, res) => {
