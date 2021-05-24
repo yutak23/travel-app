@@ -13,10 +13,11 @@ import 'bootstrap-suggest';
 const importAll = (r) => r.keys().forEach(r);
 importAll(require.context('../', true, /\.png$/));
 
+// css
+import "toastify-js/src/toastify.css"
+
 // Sass
-import './styles/resets.scss';
 import './styles/base.scss';
-import './styles/header.scss'
 
 // const definition
 const subEl = document.querySelector('.btn-primary');

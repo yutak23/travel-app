@@ -25,7 +25,7 @@ module.exports = {
             loader: "babel-loader"
         },
         {
-            test: /\.scss$/,
+            test: /\.(css|scss)$/,
             use: [{
                 loader: "style-loader",
             },
