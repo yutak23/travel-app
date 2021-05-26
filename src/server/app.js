@@ -1,9 +1,4 @@
-const axios = require('axios').default;
-
-// Require Express to run server and routes
 const express = require('express');
-
-// Start up an instance of app
 const app = express();
 
 /* Middleware */
@@ -23,6 +18,7 @@ app.use(express.static('dist'))
 const dotenv = require('dotenv')
 dotenv.config();
 
+const axios = require('axios').default;
 // instance for get countries and cities
 const instance = axios.create({
     baseURL: 'https://api.countrystatecity.in/v1/',
