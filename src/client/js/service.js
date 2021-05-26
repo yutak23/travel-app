@@ -13,7 +13,7 @@ export const fetchData = async (url, countryCode, countryName, location) => {
 
     try {
         const fetchData = await response.json();
-        return fetchData;
+        return { status: response.status, data: fetchData };
     } catch (error) {
         return { error: error };
     }

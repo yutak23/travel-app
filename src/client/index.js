@@ -33,16 +33,15 @@ subEl.addEventListener('click', async () => {
     drewSubmittingBtn();
     pageData.departure = departure.value;
     pageData.endDate = endDate.value;
-    const data = await fetchData('/fetchData', pageData.countryCode, pageData.countryName, pageData.location);
+    const res = await fetchData('/fetchData', pageData.countryCode, pageData.countryName, pageData.location);
 
     drewSubmitBtn();
-    console.log(data);
-    if (data.error) {
+    if (res.status !== 200) {
         viewBadSearch();
     } else {
         const compareDate = addDays(Date.now(), 6);
-        if (new Date(departure.value).getTime() <= new Date(compareDate).getTime()) renderCurrentWeather(data, pageData);
-        else renderForecastWeather(data, pageData);
+        if (new Date(departure.value).getTime() <= new Date(compareDate).getTime()) renderCurrentWeather(res, pageData);
+        else renderForecastWeather(res, pageData);
     }
 });
 

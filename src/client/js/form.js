@@ -5,8 +5,8 @@ import Toastify from 'toastify-js'
  */
 export const viewBadSearch = () => {
     Toastify({
-        text: "Please input 'Country' and 'Location' before click 'Submit' button.",
-        duration: 3000,
+        text: "An error has occured. Please check the input contents. Country and Location is required.",
+        duration: 4500,
         newWindow: true,
         gravity: "top",
         position: "left",
