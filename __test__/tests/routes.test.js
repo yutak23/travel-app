@@ -5,7 +5,7 @@ describe('Get Endpoints (not mocking)', () => {
     it('/allCountries', async () => {
         const res = await request(app).get('/allCountries')
         expect(res.status).toEqual(200)
-        expect(res.body.countries[0].id).toEqual(1)
+        expect(res.body.countries[0].name).toEqual('Afghanistan')
     })
 
     it('/allCitiesByCountry', async () => {
