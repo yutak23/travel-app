@@ -28,7 +28,12 @@ export const getCountryList = async () => {
         const res = await axios.get('/allCountries');
         return res.data.countries;
     } catch (error) {
-        return { error: error };
+        if (error.response) {
+            console.log('response.data', error.response.data);
+            console.log('response.status', error.response.status);
+        }
+        console.log(error.message);
+        return [];
     }
 }
 

@@ -40,8 +40,8 @@ subEl.addEventListener('click', async () => {
         viewBadSearch();
     } else {
         const compareDate = addDays(Date.now(), 6);
-        if (new Date(departure.value).getTime() <= new Date(compareDate).getTime()) renderCurrentWeather(res, pageData);
-        else renderForecastWeather(res, pageData);
+        if (new Date(departure.value).getTime() <= new Date(compareDate).getTime()) renderCurrentWeather(res.data, pageData);
+        else renderForecastWeather(res.data, pageData);
     }
 });
 

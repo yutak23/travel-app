@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "start": "node src/server/server.js",
+    "start": "node src/server/server/server.js",
     "build-prod": "webpack --config webpack.prod.js",
     "build-dev": "webpack serve --config webpack.dev.js"
   },
@@ -13,7 +13,6 @@
   "license": "ISC",
   "description": "",
   "jest": {
-    "testEnvironment": "node",
     "coveragePathIgnorePatterns": [
       "/node_modules/"
     ]

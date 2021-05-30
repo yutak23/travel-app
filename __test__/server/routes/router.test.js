@@ -1,5 +1,5 @@
 const request = require('supertest')
-const app = require('../../src/server/app')
+const app = require('../../../src/server/app')
 
 describe('Get Endpoints (not mocking)', () => {
     it('/allCountries', async () => {
@@ -13,4 +13,5 @@ describe('Get Endpoints (not mocking)', () => {
         expect(res.status).toEqual(200)
         expect(res.body.cities[0].name).toEqual('Abashiri')
     })
+
 })
