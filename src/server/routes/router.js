@@ -72,13 +72,16 @@ const getRandomInt = (min, max) => {
 }
 
 const errorHandler = (res, error) => {
-    console.log('error.message', error.message)
     if (error.response) {
         console.log('response.data', error.response.data)
         console.log('response.status', error.response.status)
-        res.status(500).send(error.response.data)
+        console.log('response.statusText', error.response.statusText)
+        res.status(error.response.status).send({
+            error: error.response.data,
+            errorMsg: error.message
+        })
     } else {
-        res.status(500).send({ error: error.message })
+        res.status(500).send({ errorMsg: error.message })
     }
 }
 
