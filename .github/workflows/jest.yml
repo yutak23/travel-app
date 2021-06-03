@@ -1,0 +1,19 @@
+name: Testing by Jest
+
+on:
+  push:
+    branches:
+      - "**"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: package-lockより環境構築
+        run: npm ci
+
+      - name: テスト実行
+        run: npm test
