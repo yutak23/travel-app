@@ -16,4 +16,9 @@ jobs:
         run: npm ci
 
       - name: テスト実行
+         env:
+          GEO_NAME_USERNAME: ${{ secrets.GEO_NAME_USERNAME }}
+          WAETHERBIT_API_KEY: ${{ secrets.WAETHERBIT_API_KEY }}
+          PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
+          COUNTRYSTATECITY_API_KRY: ${{ secrets.COUNTRYSTATECITY_API_KRY }}
         run: npm test
