@@ -4,17 +4,17 @@ const axios = require('axios').default;
 const dotenv = require('dotenv')
 dotenv.config();
 
-// instance for get countries and cities
-const instance = axios.create({
+// config for get countries and cities
+const axiosConfig = {
     baseURL: 'https://api.countrystatecity.in/v1/',
-    timeout: 3000,
+    timeout: 2500,
     headers: { 'X-CSCAPI-KEY': `${process.env.COUNTRYSTATECITY_API_KRY}` }
-})
+}
 
 const allCountries = async (req, res) => {
     try {
-        const countries = await instance.get('countries')
-        res.send({ countries: countries.data })
+        const countries = await axios.get('countries', axiosConfig)
+        res.status(200).send({ countries: countries.data })
     } catch (error) {
         errorHandler(res, error)
     }
@@ -22,15 +22,14 @@ const allCountries = async (req, res) => {
 
 const allCitiesByCountry = async (req, res) => {
     try {
-        const cities = await instance.get(`countries/${req.query.ciso}/cities`)
-        res.send({ cities: cities.data })
+        const cities = await axios.get(`countries/${req.query.ciso}/cities`, axiosConfig)
+        res.status(200).send({ cities: cities.data })
     } catch (error) {
         errorHandler(res, error)
     }
 }
 
 const fetchData = async (req, res) => {
-    console.log(req.query)
     try {
         let pixabay
         let pixabayResOp = 'location'
