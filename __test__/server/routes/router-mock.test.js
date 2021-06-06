@@ -29,12 +29,8 @@ describe('axiosはmock化＆関数のテストとしてテスト', () => {
             send: jest.fn().mockReturnThis()
         }
 
-
-
         await allCountries(req, res)
         expect(res.status.mock.calls[0][0]).toBe(200)
         expect(res.send.mock.calls[0][0].countries[0].name).toEqual('not use superttest')
-
-        console.log(res.send.mock.calls)
     })
 })

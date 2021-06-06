@@ -7,7 +7,7 @@ dotenv.config();
 // config for get countries and cities
 const axiosConfig = {
     baseURL: 'https://api.countrystatecity.in/v1/',
-    timeout: 2500,
+    timeout: 3000,
     headers: { 'X-CSCAPI-KEY': `${process.env.COUNTRYSTATECITY_API_KRY}` }
 }
 
