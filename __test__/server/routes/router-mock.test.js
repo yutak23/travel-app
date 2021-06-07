@@ -16,6 +16,15 @@ describe('axiosをmock化＆supertestでrequestを飛ばしてテスト', () => 
         expect(res.status).toEqual(200)
         expect(res.body.countries[0].name).toEqual('test')
     })
+
+    it('Abnormal pattern test of API /allCountries', async () => {
+        const resp = new Error('error test');
+        axios.get.mockRejectedValue(resp);
+
+        const res = await request(app).get('/allCountries')
+        expect(res.status).toEqual(500)
+        expect(res.body.errorMsg).toEqual('error test')
+    })
 })
 
 describe('axiosはmock化＆関数のテストとしてテスト', () => {
@@ -32,5 +41,20 @@ describe('axiosはmock化＆関数のテストとしてテスト', () => {
         await allCountries(req, res)
         expect(res.status.mock.calls[0][0]).toBe(200)
         expect(res.send.mock.calls[0][0].countries[0].name).toEqual('not use superttest')
+    })
+
+    it('Abnormal pattern test of API /allCountries', async () => {
+        const resp = new Error('error test');
+        axios.get.mockRejectedValue(resp);
+
+        const req = {}
+        const res = {
+            status: jest.fn().mockReturnThis(),
+            send: jest.fn().mockReturnThis()
+        }
+
+        await allCountries(req, res)
+        expect(res.status.mock.calls[0][0]).toBe(500)
+        expect(res.send.mock.calls[0][0].errorMsg).toEqual('error test')
     })
 })
