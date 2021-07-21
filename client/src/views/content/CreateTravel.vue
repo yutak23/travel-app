@@ -8,7 +8,7 @@
             <input
               name="country"
               type="text"
-              :class="['form-control', validateContry(v)]"
+              :class="['form-control', v.classes]"
               placeholder="行先（国名）"
               v-model="country"
             />
@@ -23,7 +23,7 @@
             <input
               name="city"
               type="text"
-              :class="['form-control', validateCity(v)]"
+              :class="['form-control', v.classes]"
               placeholder="行先（都市名）"
               v-model="city"
             />
@@ -38,7 +38,7 @@
             <input
               name="departureDate"
               type="date"
-              :class="['form-control', validateDepartureDate(v)]"
+              :class="['form-control', v.classes]"
               placeholder="出発日"
               v-model="departureDate"
             />
@@ -53,7 +53,7 @@
             <input
               name="returnDate"
               type="date"
-              :class="['form-control', validateReturnDate(v)]"
+              :class="['form-control', v.classes]"
               placeholder="帰還日"
               v-model="returnDate"
             />
@@ -90,12 +90,18 @@
 </template>
 
 <script>
-import { ValidationProvider, localize, extend } from "vee-validate";
+import { ValidationProvider, localize, extend, configure } from "vee-validate";
 import { required } from "vee-validate/dist/rules";
 import ja from "vee-validate/dist/locale/ja.json";
 
 extend("required", required);
 localize("ja", ja);
+configure({
+  classes: {
+    valid: "is-valid",
+    invalid: "is-invalid"
+  }
+});
 
 export default {
   data() {
@@ -106,36 +112,11 @@ export default {
       returnDate: ""
     };
   },
-  computed: {
-    validateContry() {
-      return v => validate(v);
-    },
-    validateCity() {
-      return v => validate(v);
-    },
-    validateDepartureDate() {
-      return v => validate(v);
-    },
-    validateReturnDate() {
-      return v => validate(v);
-    }
-  },
   components: {
     ValidationProvider
   },
   methods: {
     create() {}
-  }
-};
-
-/**
- * validationの共通処理
- */
-const validate = slotPops => {
-  if (slotPops.touched) {
-    return slotPops.errors[0] ? "is-invalid" : "is-valid";
-  } else {
-    return "";
   }
 };
 </script>
