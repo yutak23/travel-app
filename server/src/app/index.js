@@ -1,5 +1,5 @@
 const express = require('express');
-const routes = require('./router');
+const routes = require('../router');
 const app = express();
 
 /* Middleware */
@@ -12,6 +12,6 @@ app.use(express.json());
 const cors = require('cors');
 app.use(cors());
 
-app.use('', routes);
+app.use('/', routes);
 
 module.exports = app;

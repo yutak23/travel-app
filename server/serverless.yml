@@ -1,0 +1,21 @@
+service:
+  name: travel-app
+  useDotenv: true
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: ap-northeast-1
+
+package:
+  exclude:
+    - .git/**
+    - test/**
+    - README.md
+
+functions:
+  func:
+    handler: src/server/lambda.handler
+    events:
+      - http: ANY /
+      - http: "ANY {proxy+}"
