@@ -15,9 +15,16 @@
                 name="country"
                 type="text"
                 :class="['form-control', v.classes]"
+                list="country"
+                autocomplete="on"
                 placeholder="行先（国名）"
                 v-model="country"
               />
+              <datalist id="country">
+                <option v-for="country in getCountries" :key="country">
+                  {{ country }}
+                </option>
+              </datalist>
               <label for="floatingInput">行先（国名）</label>
             </div>
             <div class="mt-1 text-danger">{{ v.errors[0] }}</div>
@@ -123,6 +130,14 @@ export default {
   components: {
     ValidationProvider,
     ValidationObserver
+  },
+  created() {
+    this.$store.dispatch("getCountries");
+  },
+  computed: {
+    getCountries() {
+      return this.$store.getters.getCountries;
+    }
   },
   methods: {
     create() {}
