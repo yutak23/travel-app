@@ -1,12 +1,10 @@
-## AWS Lambda 構築備忘録
+# AWS Lambda 構築備忘録
 
-### 1. AWS Lambda のセットアップ
-
-#### AWS アカウントを作成する
+## AWS アカウントを作成する
 
 自分のルートアカウントを作成
 
-#### AWS のアクセスキーを作成する
+## AWS のアクセスキーを作成する
 
 新規で Lambda・API Gateway の Deploy を行う IAM ユーザを作成する
 この時以下の 5 つの権限を付与する。
@@ -20,11 +18,11 @@
 
 ※IAMFullAccess の代わりにインラインポリシーを付ける方法もあり、それは[ここ](https://qiita.com/akki-memo/items/91b5255efa16b9b3f84a#%E6%A8%A9%E9%99%90%E3%82%92%E8%BF%BD%E5%8A%A0%E3%81%97%E3%81%A6%E3%82%82%E3%82%A8%E3%83%A9%E3%83%BC%E3%81%8C%E5%87%BA%E3%82%8B%E5%A0%B4%E5%90%88)を参照
 
-#### AWS CLI をインストールする
+## AWS CLI をインストールする
 
 https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html
 
-#### AWS プロファイルを作成する
+## AWS プロファイルを作成する
 
 `aws configure`コマンドで profile を作成する
 
@@ -36,7 +34,18 @@ Default region name [None]: ap-northeast-1
 Default output format [None]: json
 ```
 
-#### deploy する
+## AWS Lambda 用の handler を作成する（lambda.js）
+
+https://github.com/vendia/serverless-express#minimal-lambda-handler-wrapper
+
+```js
+// lambda.js
+const serverlessExpress = require("@vendia/serverless-express");
+const app = require("./app");
+exports.handler = serverlessExpress({ app });
+```
+
+## deploy する
 
 成功すると、以下のように`endpoints:`の情報が log に出力される
 
@@ -90,7 +99,13 @@ Serverless: Announcing Metrics, CI/CD, Secrets and more built into Serverless Fr
 **************************************************************************************************************************************
 ```
 
-[参考文献 ① 　 AWS Lambda へのデプロイ](https://slack.dev/bolt-js/ja-jp/deployments/aws-lambda#aws-lambda-%E3%81%AE%E3%82%BB%E3%83%83%E3%83%88%E3%82%A2%E3%83%83%E3%83%97)
+## ローカル開発と Lambda の使い分け
+
+ローカル開発時は`npm run start`で `local.js` で Server を起動し localhost:8081 で listen する
+
+## 参考文献
+
+[AWS Lambda へのデプロイ](https://slack.dev/bolt-js/ja-jp/deployments/aws-lambda#aws-lambda-%E3%81%AE%E3%82%BB%E3%83%83%E3%83%88%E3%82%A2%E3%83%83%E3%83%97)<br>
 [【2021 年 6 月最新版】Express を serverless で API Gateway から Lambda を使って Web API を使用する方法](https://qiita.com/akki-memo/items/91b5255efa16b9b3f84a)
 
 # トラブルシューティングの log
@@ -105,7 +120,7 @@ Serverless: Announcing Metrics, CI/CD, Secrets and more built into Serverless Fr
 
 ### 解決
 
-IAMFullAccess をアタッチした<br>
+IAMFullAccess をアタッチする<br>
 ※これ（IAMFullAccess） の代わりに[インラインポリシーを付ける方法](https://qiita.com/akki-memo/items/91b5255efa16b9b3f84a#%E6%A8%A9%E9%99%90%E3%82%92%E8%BF%BD%E5%8A%A0%E3%81%97%E3%81%A6%E3%82%82%E3%82%A8%E3%83%A9%E3%83%BC%E3%81%8C%E5%87%BA%E3%82%8B%E5%A0%B4%E5%90%88)もある
 
 ## API Gateway の log が見れない
@@ -195,18 +210,3 @@ console.log("COUNTRYSTATECITY_API_KRY", process.env.COUNTRYSTATECITY_API_KRY);
 https://www.serverless.com/framework/docs/environment-variables/#resolution-of-environment-variables/
 
 ※[AWS CLI で環境変数を設定する](https://docs.aws.amazon.com/ja_jp/lambda/latest/dg/configuration-envvars.html)事もできる
-
-# AWS Lambda 用の handler を作成する（lambda.js）
-
-https://github.com/vendia/serverless-express#minimal-lambda-handler-wrapper
-
-```js
-// lambda.js
-const serverlessExpress = require("@vendia/serverless-express");
-const app = require("./app");
-exports.handler = serverlessExpress({ app });
-```
-
-# ローカル開発と Lambda の使い分け
-
-ローカル開発時は`npm run start`で `local.js` で Server を起動し localhost:8081 で listen する
