@@ -21,7 +21,8 @@
                 v-model="country"
               />
               <datalist id="country">
-                <option v-for="country in getCountries" :key="country">
+                <!-- <option v-for="country in getCountries" :key="country"> -->
+                <option v-for="country in countries" :key="country">
                   {{ country }}
                 </option>
               </datalist>
@@ -108,6 +109,7 @@ import {
 } from "vee-validate";
 import { required } from "vee-validate/dist/rules";
 import ja from "vee-validate/dist/locale/ja.json";
+import axios from "../../axios-conf";
 
 extend("required", required);
 localize("ja", ja);
@@ -124,14 +126,16 @@ export default {
       country: "",
       city: "",
       departureDate: "",
-      returnDate: ""
+      returnDate: "",
+      countries: []
     };
   },
   components: {
     ValidationProvider,
     ValidationObserver
   },
-  created() {
+  async created() {
+    this.countries = await getContryDatas();
     this.$store.dispatch("getCountries");
   },
   computed: {
@@ -141,6 +145,24 @@ export default {
   },
   methods: {
     create() {}
+  }
+};
+
+const getContryDatas = async () => {
+  const array = [];
+  try {
+    const res = await axios.get("/allCountries");
+    res.data.countries.forEach(item => {
+      array.push(item.name);
+    });
+    return array;
+  } catch (error) {
+    console.log(error.message);
+    if (error.response) {
+      console.log("response.data", error.response.data);
+      console.log("response.status", error.response.status);
+    }
+    return [];
   }
 };
 </script>
