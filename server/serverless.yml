@@ -1,6 +1,5 @@
-service:
-  name: travel-app
-  useDotenv: true
+service: travel-app
+useDotenv: true
 
 provider:
   name: aws
@@ -16,6 +15,11 @@ package:
 functions:
   func:
     handler: src/server/lambda.handler
+    environment:
+      GEO_NAME_USERNAME: ${env:GEO_NAME_USERNAME}
+      WAETHERBIT_API_KEY: ${env:WAETHERBIT_API_KEY}
+      PIXABAY_API_KEY: ${env:PIXABAY_API_KEY}
+      COUNTRYSTATECITY_API_KRY: ${env:COUNTRYSTATECITY_API_KRY}
     events:
       - http: ANY /
       - http: "ANY {proxy+}"
