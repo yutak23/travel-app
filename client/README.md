@@ -38,8 +38,8 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 という観点で 『2』 の実装にする
 
-1. computed + Vuex<br> この実装方法だと、非同期処理の結果が返ってきたらそれを computed で html の方に渡せる（store の state が依存している値なので非同期処理でそれが変化するタイミングで computed が走る）
-1. ライフサイクルフックの created・updated<br> この実装方法だと、created・updated に非同期処理を書きその結果を data に代入する事で、html の方にデータを渡す（Vuex とか他の仕組みを使わない方法）
+1. computed + Vuex<br> この実装方法だと、Vuex の Store に非同期処理を実装し、その結果が返ってきたら Store の state が更新されてその更新をキャッチして computed が走り html の方にデータが渡る（store の state が依存している値なので非同期処理でそれが変化するタイミングで computed が走る）
+1. data<br> この実装方法だと、ライフサイクルフックの created・updated に非同期処理を実装しその結果を data に代入する事で、html の方にデータを渡す（Vuex とか他の仕組みを使わない方法）
 
 ## 実装時に参考にしたもの
 
