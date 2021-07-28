@@ -87,7 +87,7 @@ var translate = new AWS.Translate();
 AWS SDK をインストールするが、v3 からはそれぞれの client で分割されているので、必要なものをインストールするようにする<br>
 client 一覧は[ここを参照](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/index.html)
 
-今回は translate なので[これ](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-translate/index.html)
+今回は translate なので[@aws-sdk/client-translate](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-translate/index.html)
 
 フロントエンド（Vue 側）で`@aws-sdk/client-translate`をインストールして、`TranslateTextCommand`とかを使ってみようとしたが、Vue の公式に以下のような記述があり、**環境変数に秘密キーを含めてはダメ（静的にバンドルされるので）** と書かれているので、サーバサイド側でやる事に切り替える・・・
 
@@ -95,13 +95,13 @@ client 一覧は[ここを参照](https://docs.aws.amazon.com/AWSJavaScriptSDK/v
 > Do not store any secrets (such as private API keys) in your app!（アプリにシークレット（秘密の API キーなど）を保存しないでください！）<br>
 > Environment variables are embedded into the build, meaning anyone can view them by inspecting your app's files.（環境変数はビルドに埋め込まれています。つまり、アプリのファイルを調べることで、誰でも環境変数を表示できます。）
 
-ちなみに、上記の事から以下のように、Vue では環境変数の内、誤って秘密キーを読み込まないように`NODE_ENV, BASE_URL, VUE_APP_というprefixが付いたもの`だけしか読み込まれない仕組みになっている<br>
+ちなみに上記の事から以下のように、Vue では環境変数の中にある秘密キーを誤って読み込まないよう、`NODE_ENV, BASE_URL, VUE_APP_というprefixが付いたもの`だけしか読み込まれない仕組みになっている<br>
 
 > Note that only NODE*ENV, BASE_URL, and variables that start with VUE_APP* will be statically embedded into the client bundle with webpack.DefinePlugin. It is to avoid accidentally exposing a private key on the machine that could have the same name.（NODE * ENV、BASE_URL、および VUE_APP *で始まる変数のみが、webpack.DefinePlugin を使用してクライアントバンドルに静的に埋め込まれることに注意してください。 同じ名前の可能性のある秘密鍵をマシン上で誤って公開しないようにするためです。）
 
 AWS.config では環境変数を credentials として自動で読み込んでくれるが、上記の制約上`AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY`は読み込まれない対象になる・・・
 
-※API リファレンス
+※API リファレンス<br>
 https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/Translate.html#translateText-property
 https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-translate/classes/translatetextcommand.html
 https://docs.aws.amazon.com/translate/latest/dg/API_TranslateText.html
