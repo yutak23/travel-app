@@ -21,7 +21,6 @@
                 v-model="country"
               />
               <datalist id="country">
-                <!-- <option v-for="country in getCountries" :key="country"> -->
                 <option v-for="country in countries" :key="country.name">
                   {{ country.name }}
                 </option>
@@ -136,12 +135,6 @@ export default {
   },
   async created() {
     this.countries = await getContryDatas();
-    this.$store.dispatch("getCountries");
-  },
-  computed: {
-    getCountries() {
-      return this.$store.getters.getCountries;
-    }
   },
   methods: {
     create() {}
