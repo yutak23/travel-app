@@ -22,8 +22,8 @@
               />
               <datalist id="country">
                 <!-- <option v-for="country in getCountries" :key="country"> -->
-                <option v-for="country in countries" :key="country">
-                  {{ country }}
+                <option v-for="country in countries" :key="country.name">
+                  {{ country.name }}
                 </option>
               </datalist>
               <label for="floatingInput">行先（国名）</label>
@@ -149,13 +149,9 @@ export default {
 };
 
 const getContryDatas = async () => {
-  const array = [];
   try {
     const res = await axios.get("/allCountries");
-    res.data.countries.forEach(item => {
-      array.push(item.name);
-    });
-    return array;
+    return res.data.countries;
   } catch (error) {
     console.log(error.message);
     if (error.response) {
