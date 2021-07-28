@@ -19,6 +19,7 @@
                 autocomplete="on"
                 placeholder="行先（国名）"
                 v-model="country"
+                @change="changeCountry"
               />
               <datalist id="country">
                 <option v-for="country in countries" :key="country.name">
@@ -37,9 +38,16 @@
                 name="city"
                 type="text"
                 :class="['form-control', v.classes]"
+                list="city"
+                autocomplete="on"
                 placeholder="行先（都市名）"
                 v-model="city"
               />
+              <datalist id="city">
+                <option v-for="city in cities" :key="city.id">
+                  {{ city.name }}
+                </option>
+              </datalist>
               <label for="floatingInput">行先（都市名）</label>
             </div>
             <div class="mt-1 text-danger">{{ v.errors[0] }}</div>
@@ -126,7 +134,8 @@ export default {
       city: "",
       departureDate: "",
       returnDate: "",
-      countries: []
+      countries: [],
+      cities: []
     };
   },
   components: {
@@ -134,24 +143,43 @@ export default {
     ValidationObserver
   },
   async created() {
-    this.countries = await getContryDatas();
+    this.countries = await getContries();
   },
   methods: {
-    create() {}
+    create() {},
+    async changeCountry() {
+      const countryData = this.countries.filter(
+        item => item.name === this.country
+      );
+      this.cities = await getCities(countryData[0]["iso2"]);
+    }
   }
 };
 
-const getContryDatas = async () => {
+const getContries = async () => {
   try {
     const res = await axios.get("/allCountries");
     return res.data.countries;
   } catch (error) {
-    console.log(error.message);
-    if (error.response) {
-      console.log("response.data", error.response.data);
-      console.log("response.status", error.response.status);
-    }
-    return [];
+    errorHandler(error);
   }
+};
+
+const getCities = async ciso => {
+  try {
+    const res = await axios.get(`/allCitiesByCountry?ciso=${ciso}`);
+    return res.data.cities;
+  } catch (error) {
+    errorHandler(error);
+  }
+};
+
+const errorHandler = error => {
+  console.log(error.message);
+  if (error.response) {
+    console.log("response.data", error.response.data);
+    console.log("response.status", error.response.status);
+  }
+  return [];
 };
 </script>
