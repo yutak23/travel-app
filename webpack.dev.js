@@ -82,7 +82,6 @@ module.exports = {
 		new LicenseWebpackPlugin({
 			unacceptableLicenseTest: (licenseType) =>
 				['GPL', 'AGPL', 'LGPL', 'NGPL'].includes(licenseType),
-			excludedPackageTest: (packageName) => packageName === 'excluded-package',
 			outputFilename: 'meta/license.txt'
 		})
 	]
