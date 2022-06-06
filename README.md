@@ -56,3 +56,8 @@ This file is not provided via the project files so create it manually in the pro
 ## server side
 
 - node.js(Express)
+
+## other
+
+- jest:28 以降では`jest-environment-jsdom`を自分でインストールする必要がある  
+  https://jestjs.io/docs/upgrading-to-jest28#jsdom
