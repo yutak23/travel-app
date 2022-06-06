@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const { LicenseWebpackPlugin } = require('license-webpack-plugin');
 
 module.exports = {
 	entry: './src/client/index.js',
@@ -77,6 +78,12 @@ module.exports = {
 		new webpack.ProvidePlugin({
 			jQuery: 'jquery',
 			$: 'jquery'
+		}),
+		new LicenseWebpackPlugin({
+			unacceptableLicenseTest: (licenseType) =>
+				['GPL', 'AGPL', 'LGPL', 'NGPL'].includes(licenseType),
+			excludedPackageTest: (packageName) => packageName === 'excluded-package',
+			outputFilename: 'meta/license.txt'
 		})
 	]
 };
