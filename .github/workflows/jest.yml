@@ -3,7 +3,7 @@ name: Testing by Jest
 on:
   push:
     branches:
-      - "**"
+      - '**'
   workflow_dispatch:
 
 jobs:

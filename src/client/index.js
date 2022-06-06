@@ -14,7 +14,7 @@ const importAll = (r) => r.keys().forEach(r);
 importAll(require.context('../', true, /\.png$/));
 
 // css
-import "toastify-js/src/toastify.css"
+import 'toastify-js/src/toastify.css';
 
 // Sass
 import './styles/base.scss';
@@ -30,62 +30,68 @@ const pageData = {};
 
 // Event handler
 subEl.addEventListener('click', async () => {
-    drewSubmittingBtn();
-    pageData.departure = departure.value;
-    pageData.endDate = endDate.value;
-    const res = await fetchData('/fetchData', pageData.countryCode, pageData.countryName, pageData.location);
+	drewSubmittingBtn();
+	pageData.departure = departure.value;
+	pageData.endDate = endDate.value;
+	const res = await fetchData(
+		'/fetchData',
+		pageData.countryCode,
+		pageData.countryName,
+		pageData.location
+	);
 
-    drewSubmitBtn();
-    if (res.status !== 200) {
-        viewBadSearch();
-    } else {
-        const compareDate = addDays(Date.now(), 6);
-        if (new Date(departure.value).getTime() <= new Date(compareDate).getTime()) renderCurrentWeather(res.data, pageData);
-        else renderForecastWeather(res.data, pageData);
-    }
+	drewSubmitBtn();
+	if (res.status !== 200) {
+		viewBadSearch();
+	} else {
+		const compareDate = addDays(Date.now(), 6);
+		if (new Date(departure.value).getTime() <= new Date(compareDate).getTime())
+			renderCurrentWeather(res.data, pageData);
+		else renderForecastWeather(res.data, pageData);
+	}
 });
 
 document.addEventListener('DOMContentLoaded', async () => {
-    countrySuggest();
-})
+	countrySuggest();
+});
 
 const countrySuggest = async () => {
-    $('[name="country"]').suggest('#', {
-        data: await getCountryList(),
-        map: function (country) {
-            return {
-                value: `{"name" : "${country.name}", "code" : "${country.iso2}"}`,
-                text: '<strong>' + country.name + '</strong>'
-            }
-        },
-        onselect(e, item) {
-            const jsonObj = JSON.parse(item.value);
-            pageData.countryName = jsonObj.name;
-            pageData.countryCode = jsonObj.code;
-            countryEl.value = pageData.countryName;
-            citySuggest(pageData.countryCode);
-        }
-    })
-}
+	$('[name="country"]').suggest('#', {
+		data: await getCountryList(),
+		map: function (country) {
+			return {
+				value: `{"name" : "${country.name}", "code" : "${country.iso2}"}`,
+				text: '<strong>' + country.name + '</strong>'
+			};
+		},
+		onselect(e, item) {
+			const jsonObj = JSON.parse(item.value);
+			pageData.countryName = jsonObj.name;
+			pageData.countryCode = jsonObj.code;
+			countryEl.value = pageData.countryName;
+			citySuggest(pageData.countryCode);
+		}
+	});
+};
 
 const citySuggest = async (code) => {
-    $('[name="location"]').suggest('#', {
-        data: await getCityList(code),
-        map: function (city) {
-            return {
-                value: city.name,
-                text: '<strong>' + city.name + '</strong>'
-            }
-        },
-        onselect(e, item) {
-            pageData.location = item.value;
-            locationEl.value = pageData.location;
-        }
-    })
-}
+	$('[name="location"]').suggest('#', {
+		data: await getCityList(code),
+		map: function (city) {
+			return {
+				value: city.name,
+				text: '<strong>' + city.name + '</strong>'
+			};
+		},
+		onselect(e, item) {
+			pageData.location = item.value;
+			locationEl.value = pageData.location;
+		}
+	});
+};
 
 const addDays = (date, days) => {
-    const result = new Date(date);
-    result.setDate(result.getDate() + days);
-    return result;
-}
+	const result = new Date(date);
+	result.setDate(result.getDate() + days);
+	return result;
+};
