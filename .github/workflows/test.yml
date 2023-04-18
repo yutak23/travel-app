@@ -7,13 +7,17 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
+
       - name: package-lockより環境構築
         run: npm ci
+
+      - name: build
+        run: npm run build
 
       - name: テスト実行
         env:
