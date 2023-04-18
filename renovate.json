@@ -1,6 +1,24 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:base"
-  ]
+	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
+	"extends": [
+		"config:base",
+		"group:allNonMajor",
+		":separateMultipleMajorReleases",
+		":prConcurrentLimitNone",
+		":prHourlyLimitNone",
+		":timezone(Asia/Tokyo)",
+		":doNotPinPackage(@popperjs/core)"
+	],
+	"labels": ["renovate"],
+	"enabledManagers": ["npm"],
+	"major": { "labels": ["renovate", "update_major"] },
+	"platformAutomerge": true,
+	"packageRules": [
+		{
+			"description": "Automerge non-major updates",
+			"matchUpdateTypes": ["minor", "patch"],
+			"automerge": true
+		}
+	],
+	"ignoreDeps": [""]
 }
