@@ -58,7 +58,7 @@
 		"webpack-bundle-analyzer": "4.9.0",
 		"webpack-dev-server": "4.15.0",
 		"webpack-version-file": "0.1.7",
-		"workbox-webpack-plugin": "6.6.0"
+		"workbox-webpack-plugin": "7.0.0"
 	},
 	"browserslist": [
 		"> 1%",
