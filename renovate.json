@@ -48,6 +48,7 @@
 				"license-webpack-plugin",
 				"luxon",
 				"mini-css-extract-plugin",
+				"npm-check-updates",
 				"postcss",
 				"postcss-loader",
 				"prettier",
